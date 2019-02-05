@@ -18,4 +18,9 @@ app = flask.Flask(__name__)
 
 lnd = LNDNode()
 lnd.init_app(app)
+
+
+@app.route('/')
+def index():
+    return str(lnd.rpc.get_info())
 ```
