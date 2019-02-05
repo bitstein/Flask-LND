@@ -7,3 +7,15 @@ Flask-LND initializes an LND gRPC interface using Will Clark's [lnd-grpc](https:
 ```
 $ pip install flask-lnd
 ```
+
+## Usage
+
+```
+import flask
+from flask_lnd import LNDNode
+
+app = flask.Flask(__name__)
+
+lnd = LNDNode()
+lnd.init_app(app)
+```
