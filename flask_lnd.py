@@ -1,6 +1,7 @@
 from flask import current_app
 
 from lnd_grpc import lnd_grpc
+from lnd_grpc.utilities import get_lnd_dir
 
 
 class LNDNode(object):
@@ -10,9 +11,10 @@ class LNDNode(object):
             self.init_app(app)
 
     def init_app(self, app):
-        app.config.setdefault('LND_DIR', '.lnd')
+        app.config.setdefault('LND_DIR', get_lnd_dir())
         app.config.setdefault('LND_NETWORK', 'mainnet')
-        app.config.setdefault('LND_GRPC_HOST', 'localhost')
+        # Do not use localhost as it is significantly slower on Windows
+        app.config.setdefault('LND_GRPC_HOST', '127.0.0.1')
         app.config.setdefault('LND_GRPC_PORT', '10009')
         self.rpc = lnd_grpc.Client(
             lnd_dir=app.config['LND_DIR'],
